@@ -1,25 +1,28 @@
-import logo from './logo.svg';
+import { createContext, useEffect, useReducer } from 'react';
+import { reducer } from './state/appReducer';
+import { initialState } from './state/initialState';
 import './styles/styles.scss';
+import './components/ChatBox';
+import ChatBox from './components/ChatBox';
+import dispatchHelper from './state/dispatchHelper';
 
+export const AppContext = createContext();
 
-function App() {
+const App = () => {
+  const [appState, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    dispatchHelper.dispatch = (payload) => dispatch(payload);
+    Object.freeze(dispatchHelper);
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppContext.Provider value={{ appState, dispatch}}>
+      <div className="app">
+        <header className="header">Middi</header>
+        <ChatBox loggedIn={false} />
+      </div>
+    </AppContext.Provider>
   );
 }
 

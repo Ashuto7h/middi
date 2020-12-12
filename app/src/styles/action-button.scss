@@ -1,0 +1,25 @@
+
+
+.action-button {
+    border-radius: $border-radius-lg;
+    outline: none;
+    border: 0;
+    background: none;
+    box-shadow: none;
+    background: linear-gradient(180deg, $dark-purple 0%, $teal 100%);
+    font-family: $font-primary;
+    font-size: 18px;
+    text-align: center;
+    padding: $sm $xxl;
+    color: white;
+    font-weight: bold;
+    height: 55px;
+    margin-left: $lg;
+    cursor: pointer;
+}
+
+.action-button:hover {
+    box-shadow: 0 0 10px $teal;
+    border: 1px solid $teal;
+    box-sizing: border-box;
+}

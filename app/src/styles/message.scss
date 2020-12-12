@@ -1,0 +1,68 @@
+
+
+.message {
+    padding: $lg $xl;
+    border-radius: $border-radius-lg;
+    background-color: white;
+    color: $purple;
+    box-shadow: $box-shadow-md;
+    position: relative;
+    margin-bottom: $lg;
+
+    p {
+        font-weight: bold;
+        text-align: left;
+        width: 100%;
+    }
+
+    &:not(.message--loading) svg {
+        position: absolute;
+        top: -70%;
+        right: -20%;
+    }
+}
+
+.message::after {
+    bottom: 85%;
+    right: -5%;
+    border: solid transparent;
+    content: '';
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-bottom-color: white;
+    border-width: 20px;
+    margin-left: 20px;
+    transform: rotate(30deg);
+}
+
+.message--initial {
+    margin-top: $xxl;
+}
+
+.message--loading {
+    padding: $lg $xxl;
+    width: 60px;
+    display: flex;
+    justify-content: center;
+    align-self: flex-end;
+
+    &::after {
+        bottom: 70%;
+        right: -10%;
+        transform: rotate(35deg);
+    }
+}
+
+.message--grouped::after {
+    display: none;
+}
+
+.message--sender-bot {
+    align-self: flex-end;
+}
+
+.message-sender-bot {
+    align-self: flex-start;
+}

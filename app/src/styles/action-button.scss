@@ -16,10 +16,19 @@
     height: 55px;
     margin-left: $lg;
     cursor: pointer;
+    white-space: nowrap;
 }
 
 .action-button:hover {
     box-shadow: 0 0 10px $teal;
     border: 1px solid $teal;
     box-sizing: border-box;
+}
+
+@media screen and (max-width: $break-point-mobile) {
+    .action-button {
+        padding: $sm $lg;
+        font-size: 14px;
+        height: 45px;
+    }
 }

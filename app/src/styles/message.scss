@@ -66,3 +66,9 @@
 .message-sender-bot {
     align-self: flex-start;
 }
+
+@media screen and (max-width: $break-point-mobile) {
+    .message p {
+        font-size: 14px;
+    }
+}

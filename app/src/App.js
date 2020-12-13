@@ -22,30 +22,32 @@ const App = () => {
     .then(res => res.json())
     .then(res => {
       // authenticated user
-      dispatch({
-        type: SET_STATE,
-        payload: {
-          ...appState,
-          messages: authenticatedIntroSequence(res.user.name)
-        }
-      });
-      dispatch({
-        type: AUTH_STATE_CHANGED,
-        payload: {
-          loggedIn: true,
-          name: res.user.name
-        }
-      });
-    })
-    .catch(() => {
-      // unauthenticated user
-      dispatch({
-        type: SET_STATE,
-        payload: {
-          ...appState,
-          messages: unauthenticatedIntroSequence()
-        }
-      });
+      if (res.user) {
+        dispatch({
+          type: SET_STATE,
+          payload: {
+            ...appState,
+            messages: authenticatedIntroSequence(res.user.name)
+          }
+        });
+        dispatch({
+          type: AUTH_STATE_CHANGED,
+          payload: {
+            loggedIn: true,
+            name: res.user.name
+          }
+        });
+      }
+      else {
+        // unauthenticated user
+        dispatch({
+          type: SET_STATE,
+          payload: {
+            ...appState,
+            messages: unauthenticatedIntroSequence()
+          }
+        });
+      }
     })
     .finally(() => {
       setLoading(false);

@@ -3,7 +3,6 @@ import { AppContext } from '../App';
 import * as types from '../types';
 import Message from './Message';
 import ActionButton from './ActionButton';
-import { v4 as uuid } from 'uuid';
 
 const ChatBox = () => {
   const { appState, dispatch } = useContext<types.Context>(AppContext);
@@ -40,7 +39,7 @@ const ChatBox = () => {
       </div>
       <div className="chatbox__actions">
         {appState.actions && appState.actions.map((action: types.Action) => (
-          <ActionButton action={action} key={uuid()} />
+          <ActionButton action={action} key={action.uuid} />
         ))}
       </div>
     </div>

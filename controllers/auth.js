@@ -17,7 +17,25 @@ router.post('/register', async (req, res) => {
         email,
         password: hash
       });
-      res.status(200).send({ email, name });
+      const expires = Date.now() + 24 * 60 * 60 * 60 * 7
+      const payload = {
+        name,
+        email,
+        expires
+      }
+      req.login(payload, { session: false }, error => {
+        if (error) {
+          console.log('Error logging in: ', err);
+          res.status(400).send({ error })
+        }
+        const token = jwt.sign(JSON.stringify(payload), secret);
+        res.cookie('jwt', token, { 
+          httpOnly: true, 
+          secure: process.env.NODE_ENV === 'production',
+          maxAge: expires
+        });
+        res.status(200).send({ name, email });
+      });
     }
     catch (err) {
       console.log(err);

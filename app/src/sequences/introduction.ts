@@ -36,10 +36,12 @@ export const unauthenticatedIntroSequence = (): Message[] => [{
     dispatchOnSend: {
         type: 'ACTIONS_SET',
         payload: [{
+            uuid: uuid(),
             label: 'Log in',
             callback: loginSequence
         },
         {
+            uuid: uuid(),
             label: 'Sign up',
             callback: registrationSequence
         }]
@@ -64,12 +66,14 @@ export const authenticatedIntroSequence = (name: string): Message[] => [{
     dispatchOnSend: {
         type: 'ACTIONS_SET',
         payload: [{
+            uuid: uuid(),
             label: 'Record a puff',
             callback: () => {
 
             }
         },
         {
+            uuid: uuid(),
             label: 'Add an inhaler',
             callback: () => {}
         }]

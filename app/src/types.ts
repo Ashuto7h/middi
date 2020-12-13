@@ -1,4 +1,5 @@
 export type Action = {
+    uuid: string;
     label: string;
     callback: Function;
 }

@@ -22,10 +22,13 @@ export const registrationSequence = (): void => {
     dispatchHelper.dispatch({
         type: ACTIONS_SET,
         payload: [
-            { label: 'Submit', callback: () => {
-                dispatchHelper.dispatch({
-                    type: EMIT_EVENT,
-                    payload: Events.REGISTRATION_SUBMITTED
+            { 
+                uuid: uuid(),
+                label: 'Submit', 
+                callback: () => {
+                    dispatchHelper.dispatch({
+                        type: EMIT_EVENT,
+                        payload: Events.REGISTRATION_SUBMITTED
                 })
             }}
         ]
@@ -47,28 +50,26 @@ export const loginSequence = (): void => {
     dispatchHelper.dispatch({
         type: ACTIONS_SET,
         payload: [
-            { label: 'Submit', callback: () => {
-                dispatchHelper.dispatch({
-                    type: EMIT_EVENT,
-                    payload: Events.LOGIN_SUBMITTED
-                })
+            {
+                uuid: uuid(),
+                label: 'Submit', 
+                callback: () => {
+                    dispatchHelper.dispatch({
+                        type: EMIT_EVENT,
+                        payload: Events.LOGIN_SUBMITTED
+                    })
             }}
         ]
     })
 }
 
-export const postRegistrationSequence = () => {
-    dispatchHelper.dispatch({
-        type: LAST_MESSAGE_REMOVED,
-        payload: null
-    })
-
+export const postRegistrationSequence = (name: string) => {
     dispatchHelper.dispatch({
         type: MESSAGE_ADDED,
         payload: {
             messageClass: 'message--inital',
             sender: 'bot',
-            text: `Nice job! We're on our way to helping you track your adherence 🚀`,
+            text: `Nice to meet you ${name}! We're on our way to helping you track your adherence 🚀`,
             delay: 1500,
             showLoader: false
         }
@@ -80,7 +81,7 @@ export const postRegistrationSequence = () => {
             messageClass: 'message--grouped',
             sender: 'bot',
             text: `First thing's first though, let's get an inhaler setup for you to track`,
-            delay: 1500,
+            delay: 2500,
             showLoader: true
         }
     });
@@ -107,12 +108,14 @@ export const postLoginSequence = (name: string, state: AppState) => {
             dispatchOnSend: {
                 type: 'ACTIONS_SET',
                 payload: [{
+                    uuid: uuid(),
                     label: 'Record a puff',
                     callback: () => {
 
                     }
                 },
                 {
+                    uuid: uuid(),
                     label: 'Add an inhaler',
                     callback: loginSequence
                 }]

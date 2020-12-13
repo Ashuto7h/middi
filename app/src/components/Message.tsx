@@ -10,7 +10,7 @@ type MessageProps = {
 
 const Message = ({ message }: MessageProps) => {
     const { dispatch } = useContext(AppContext);
-    const { delay, type, text, sender, showLoader } = message;
+    const { delay, messageClass, text, sender, showLoader, Component } = message;
     const [typing, setTyping] = useState(!!delay);
     const [waiting, setWaiting] = useState(!!delay);
 
@@ -38,10 +38,12 @@ const Message = ({ message }: MessageProps) => {
                         <Loading />
                     </div>
                     : <>
-                        
-                        <div className={`message message--sender-${sender} ${type}`}>
-                            {type === 'message--initial' && <Avatar />}
-                            <p>{ text }</p>
+                        <div className={`message message--sender-${sender} ${messageClass}`}>
+                            {messageClass === 'message--initial' && <Avatar />}
+                            {messageClass === 'component'
+                                ? <Component />
+                                : <p>{ text }</p>
+                            }
                         </div>
                     </>
                 )

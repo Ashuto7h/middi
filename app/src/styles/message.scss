@@ -8,6 +8,7 @@
     box-shadow: $box-shadow-md;
     position: relative;
     margin-bottom: $lg;
+    animation: fade-in-slide-left 0.4s ease 0s 1;
 
     p {
         font-weight: bold;
@@ -15,16 +16,16 @@
         width: 100%;
     }
 
-    &:not(.message--loading) svg {
+    &:not(.message--loading) .avatar {
         position: absolute;
-        top: -70%;
-        right: -20%;
+        top: -60px;
+        right: -40px;
     }
 }
 
 .message::after {
-    bottom: 85%;
-    right: -5%;
+    bottom: 78px;
+    right: -12px;
     border: solid transparent;
     content: '';
     height: 0;
@@ -70,5 +71,16 @@
 @media screen and (max-width: $break-point-mobile) {
     .message p {
         font-size: 14px;
+    }
+}
+
+@keyframes fade-in-slide-left {
+    0% {
+        opacity: 0;
+        transform: translate(40px, 30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(0px, 0px);
     }
 }

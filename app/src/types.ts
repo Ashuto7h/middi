@@ -3,26 +3,37 @@ export type Action = {
     callback: Function;
 }
 
-type MessageTypes = 'message--initial' | 'message--grouped' | 'component';
+type MessageClasses = 'message--initial' | 'message--grouped' | 'component';
 export type Message = {
-    type: MessageTypes;
+    uuid?: string;
+    messageClass: MessageClasses;
     sender: 'bot' | 'user';
     text: string;
     delay: number;
     showLoader: boolean;
     dispatchOnSend?: { type: string, payload: any };
+    Component?: any
+}
+
+type AuthState = {
+    loggedIn: boolean;
+    name: string;
 }
 
 export type AppState = {
-    auth: {
-        loggedIn: boolean;
-        username: string;
-    };
+    auth: AuthState;
     messages: Message[];
     actions: Action[];
+    eventEmitted: any;
 };
 
 export type Context = {
     appState: AppState;
     dispatch: Function;
 };
+
+export enum Events {
+    REGISTRATION_SUBMITTED = 'REGISTRATION_SUBMITTED',
+    LOGIN_SUBMITTED = 'LOGIN_SUBMITTED',
+    MESSAGE_REMOVED = 'MESSAGE_REMOVED'
+}

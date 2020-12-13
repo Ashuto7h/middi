@@ -3,6 +3,7 @@ import { AppContext } from '../App';
 import * as types from '../types';
 import Message from './Message';
 import ActionButton from './ActionButton';
+import { v4 as uuid } from 'uuid';
 
 const ChatBox = () => {
   const { appState, dispatch } = useContext<types.Context>(AppContext);
@@ -28,18 +29,18 @@ const ChatBox = () => {
     if (messages.length !== appState.messages.length) {
       setQueueIndex(queueIndex + 1);
     }
-  }, [appState])
+  }, [appState.messages])
 
   return (
     <div className="chatbox">
       <div className="chatbox__messages">
-        {messages.map((message: types.Message, index: number) => (
-          <Message message={message} key={index} />
+        {messages.map((message: types.Message) => (
+          message && <Message message={message} key={message.uuid} />
         ))}
       </div>
       <div className="chatbox__actions">
-        {appState.actions && appState.actions.map((action: types.Action, index: number) => (
-          <ActionButton action={action} key={index} />
+        {appState.actions && appState.actions.map((action: types.Action) => (
+          <ActionButton action={action} key={uuid()} />
         ))}
       </div>
     </div>

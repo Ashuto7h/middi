@@ -17,7 +17,7 @@ app.use(express.static(staticFiles));
 // Security middleware
 app.use(cors({
   credentials: true, 
-  origin: 'http://localhost:3000'
+  origin: process.env.NODE_ENV === 'production' ? 'https://middi-9hsdz.ondigitalocean.app/' : 'http://localhost:3000'
 }));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }))

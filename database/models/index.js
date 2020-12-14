@@ -2,9 +2,9 @@ const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
 const envConfigs =  require('../config/config');
-const User = require('./user');
-const Inhaler = require('./inhaler');
-const Puff = require('./puff');
+const userDef = require('./user');
+const habitDef = require('./habit');
+const completedTaskDef = require('./completedTask');
 
 const env = process.env.NODE_ENV || 'development';
 const config = envConfigs[env];
@@ -20,8 +20,22 @@ if (config.url) {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-db.User= User(sequelize, Sequelize.DataTypes);
-db.Inhaler = Inhaler(sequelize, Sequelize.DataTypes);
-db.Puff= Puff(sequelize, Sequelize.DataTypes);
+const User = sequelize.define('User', userDef);
+const Habit = sequelize.define('Habit', habitDef);
+const CompletedTask = sequelize.define('CompletedTask', completedTaskDef);
+
+Habit.hasMany(CompletedTask, {
+  onDelete: 'CASCADE'
+});
+CompletedTask.belongsTo(Habit);
+User.hasMany(Habit, {
+  onDelete: 'CASCADE'
+});
+Habit.belongsTo(User);
+
+sequelize.sync({ alter: true })
+db.Habit = Habit;
+db.CompletedTask = CompletedTask;
+db.User = User;
 
 module.exports = db;

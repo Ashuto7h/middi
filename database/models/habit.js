@@ -1,5 +1,4 @@
 const { DataTypes } = require('sequelize')
-
 module.exports = {
     id: {
       type: DataTypes.INTEGER,
@@ -10,12 +9,16 @@ module.exports = {
       type: DataTypes.STRING,
       allowNull: false
     },
-    email: {
+    description: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    password: {
+    color: {
       type: DataTypes.STRING,
+      allowNull: false
+    },
+    weeklyGoal: {
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     createdAt: {
@@ -26,4 +29,4 @@ module.exports = {
       allowNull: false,
       type: DataTypes.DATE
     }
-  }
+}

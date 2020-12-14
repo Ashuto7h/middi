@@ -26,6 +26,7 @@ export type AppState = {
     messages: Message[];
     actions: Action[];
     eventEmitted: any;
+    habits: Habit[]
 };
 
 export type Context = {
@@ -36,5 +37,26 @@ export type Context = {
 export enum Events {
     REGISTRATION_SUBMITTED = 'REGISTRATION_SUBMITTED',
     LOGIN_SUBMITTED = 'LOGIN_SUBMITTED',
-    MESSAGE_REMOVED = 'MESSAGE_REMOVED'
+    MESSAGE_REMOVED = 'MESSAGE_REMOVED',
+    HABIT_FORM_SUBMITTED = 'HABIT_FORM_SUBMITTED'
+}
+
+export type Habit = {
+    id: number;
+    userId: number;
+    name: string;
+    description: string;
+    color: string;
+    weeklyGoal: number;
+    createdAt: string;
+    updatedAt: string;
+    completedTasks?: CompletedTask[]
+}
+
+export type CompletedTask = {
+    id: number;
+    habitId: number;
+    dateCompleted: string;
+    createdAt: string;
+    updatedAt: string;
 }

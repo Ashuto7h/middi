@@ -21,12 +21,12 @@ passport.use(
                 }
             }).then(user => {
                 if (!user) {
-                    return done({ message: 'user does not exist' }, false)
+                    return done({ message: 'incorrect email or password' }, false)
                 }
                 else {
                     bcrypt.compare(password, user.password).then(response => {
                         if (!response) {
-                            return done({ message: 'incorrect username or password' }, false)
+                            return done({ message: 'incorrect email or password' }, false)
                         }
                         return done(null, user)
                     })

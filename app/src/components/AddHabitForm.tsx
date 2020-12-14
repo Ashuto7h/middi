@@ -1,31 +1,40 @@
-import React, { useState, useContext, useEffect, useRef } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { AppContext } from '../App';
 import { Events } from '../types';
 import env from '../env';
 import Loading from './Loading';
-import { postLoginSequence, registrationSequence } from '../sequences/auth';
 import { ReactComponent as Done } from './done.svg';
 import { EMIT_EVENT } from '../state/appReducer';
+import { getHabits } from '../state/api';
+import ColorSelect from './ColorSelect';
 
-type LoginForm = {
-    email: string;
-    password: string;
+type HabitForm = {
+    name: string;
+    description: string;
+    color: string;
+    weeklyGoal: number;
 };
 
-const LoginForm = () => {
+const AddHabitForm = () => {
+    const defaultForm = {
+        name: '',
+        description: '',
+        color: '',
+        weeklyGoal: 7
+    };
     const { appState, dispatch } = useContext(AppContext);
-    const [formData, setFormData] = useState<LoginForm>({ email: '', password: '' });
+    const [formData, setFormData] = useState<HabitForm>(defaultForm);
     const [loading, setLoading] = useState<boolean>(false);
     const [submitted, setSubmitted] = useState<boolean>(false);
     const [error, setError] = useState<string>(' ');
 
     useEffect(() => {
-        if (appState.eventEmitted === Events.LOGIN_SUBMITTED) {
+        if (appState.eventEmitted === Events.HABIT_FORM_SUBMITTED) {
             submit();
         }
     }, [appState.eventEmitted])
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (event: React.ChangeEvent<any>) => {
         setFormData({
             ...formData,
             [event.target.name]: event.target.value
@@ -35,7 +44,7 @@ const LoginForm = () => {
     const submit = () => {
         setError('')
         setLoading(true);
-        fetch(`${env.apiUrl}/auth/login`, {
+        fetch(`${env.apiUrl}/habits`, {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -53,7 +62,7 @@ const LoginForm = () => {
                 const { name } = res;
                 setLoading(false);
                 setSubmitted(true)
-                postLoginSequence(name, appState);
+                getHabits();
             }
             dispatch({
                 type: EMIT_EVENT,
@@ -62,27 +71,36 @@ const LoginForm = () => {
         });
     }
 
-    const showRegistration = () => {
-
-    }
-
     return (
-        <div className="form login-form">
+        <div className="form add-habit-form">
             <form>
-                <h3>👤 Login</h3>
+                <h3>➕ New Habit</h3>
                 {loading
                     ? <Loading />
                     : !submitted 
                         ? <>
-                            <label>Email <input name="email" type="email" onChange={handleInputChange} /></label>
-                            <label>Password <input name="password" type="password" onChange={handleInputChange} /></label>
+                            <label>Name <input name="email" type="text" onChange={handleInputChange} 
+                                placeholder="Drink 3 glasses of water, Do 10 pushups..."
+                            /></label>
+                            <label>Description (optional) <textarea name="description" rows={4} onChange={handleInputChange} /></label>
+                            <ColorSelect />
+                            <label>Weekly goal - how many times a week are you aiming to complete this goal?
+                                <select onChange={handleInputChange}>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                </select>
+                            </label>
                         </>
                         : <div className="form__placeholder-success"><Done /></div>
                 }
                 {(!loading && !submitted) &&
                     <div className="form__extra">
                         <p className="error">{ error }</p>
-                        <a onClick={registrationSequence}>Sign Up</a>
                     </div>
                 }
             </form>
@@ -90,4 +108,4 @@ const LoginForm = () => {
     )
 };
 
-export default LoginForm;
+export default AddHabitForm;

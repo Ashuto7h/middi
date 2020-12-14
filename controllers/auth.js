@@ -9,16 +9,20 @@ const db = require('../database/models');
 router.post('/register', async (req, res) => {
     const { name, email, password } = req.body;
     const hashCost = 10;
-    console.log(req.body);
     try {
       const hash = await bcrypt.hash(password, hashCost);
-      await db.User.create({
+      const existingUser = await db.User.findOne({ where: { email }});
+      if (existingUser) {
+        res.status(400).send({ err: { message: 'A user with that email already exists' } })
+      }
+      const user = await db.User.create({
         name,
         email,
         password: hash
       });
       const expires = Date.now() + 24 * 60 * 60 * 60 * 7
       const payload = {
+        id: user.id,
         name,
         email,
         expires
@@ -26,7 +30,7 @@ router.post('/register', async (req, res) => {
       req.login(payload, { session: false }, error => {
         if (error) {
           console.log('Error logging in: ', err);
-          res.status(400).send({ error })
+          res.status(400).send({ message: error })
         }
         const token = jwt.sign(JSON.stringify(payload), secret);
         res.cookie('jwt', token, { 
@@ -34,7 +38,7 @@ router.post('/register', async (req, res) => {
           secure: process.env.NODE_ENV === 'production',
           maxAge: expires
         });
-        res.status(200).send({ name, email });
+        res.status(200).send({ user: { id, name, email }});
       });
     }
     catch (err) {
@@ -57,6 +61,7 @@ router.post('/login', async (req, res) => {
 
       const expires = Date.now() + 24 * 60 * 60 * 60 * 7
       const payload = {
+        id: user.id,
         name: user.name,
         email: user.email,
         expires

@@ -1,9 +1,10 @@
 import dispatchHelper from '../state/dispatchHelper';
-import { ACTIONS_SET, MESSAGE_ADDED, EMIT_EVENT, LAST_MESSAGE_REMOVED, AUTH_STATE_CHANGED, SET_STATE } from '../state/appReducer';
+import { ACTIONS_SET, MESSAGE_ADDED, EMIT_EVENT, SET_STATE } from '../state/appReducer';
 import RegisterForm from '../components/RegisterForm';
 import { AppState, Events, Message } from '../types';
 import LoginForm from '../components/LoginForm';
 import { v4 as uuid } from 'uuid';
+import { addHabitSequence } from './habits';
 
 export const registrationSequence = (): void => {
     // Add registration component
@@ -69,7 +70,7 @@ export const postRegistrationSequence = (name: string) => {
         payload: {
             messageClass: 'message--inital',
             sender: 'bot',
-            text: `Nice to meet you ${name}! We're on our way to helping you track your adherence 🚀`,
+            text: `Nice to meet you ${name}! We're on our way to building healthy habits 🚀`,
             delay: 1500,
             showLoader: false
         }
@@ -80,7 +81,7 @@ export const postRegistrationSequence = (name: string) => {
         payload: {
             messageClass: 'message--grouped',
             sender: 'bot',
-            text: `First thing's first though, let's get an inhaler setup for you to track`,
+            text: `First thing's first though, let's get a habit set up for you to track`,
             delay: 2500,
             showLoader: true
         }
@@ -109,15 +110,13 @@ export const postLoginSequence = (name: string, state: AppState) => {
                 type: 'ACTIONS_SET',
                 payload: [{
                     uuid: uuid(),
-                    label: 'Record a puff',
-                    callback: () => {
-
-                    }
+                    label: 'View my habits',
+                    callback: addHabitSequence
                 },
                 {
                     uuid: uuid(),
-                    label: 'Add an inhaler',
-                    callback: loginSequence
+                    label: 'Add a habit',
+                    callback: addHabitSequence
                 }]
             }
         }

@@ -1,6 +1,7 @@
 import { Message } from '../types';
 import { registrationSequence, loginSequence } from './auth';
 import { v4 as uuid } from 'uuid';
+import { addHabitSequence } from './habits';
 
 export const unauthenticatedIntroSequence = (): Message[] => [{
     messageClass: 'message--initial',
@@ -13,7 +14,7 @@ export const unauthenticatedIntroSequence = (): Message[] => [{
 {
     messageClass: 'message--grouped',
     sender: 'bot',
-    text: `My name's Middi. I'm here to help you track your inhaler usage.`,
+    text: `My name's Middi. I'm here to help you create healthy habits while working from home.`,
     delay: 2000,
     showLoader: true,
     uuid: uuid()
@@ -21,7 +22,7 @@ export const unauthenticatedIntroSequence = (): Message[] => [{
 {
     messageClass: 'message--grouped',
     sender: 'bot',
-    text: `You can visit any time and I'll help you measure your inhaler adherence by asking a few simple questions.`,
+    text: `You can visit any time and I'll help you measure your habit progress.`,
     delay: 5000,
     showLoader: true,
     uuid: uuid()
@@ -67,15 +68,13 @@ export const authenticatedIntroSequence = (name: string): Message[] => [{
         type: 'ACTIONS_SET',
         payload: [{
             uuid: uuid(),
-            label: 'Record a puff',
-            callback: () => {
-
-            }
+            label: 'Complete a habit',
+            callback: addHabitSequence
         },
         {
             uuid: uuid(),
-            label: 'Add an inhaler',
-            callback: () => {}
+            label: 'View my weekly progress',
+            callback: addHabitSequence
         }]
     }
 }]

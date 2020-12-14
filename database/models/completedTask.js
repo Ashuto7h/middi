@@ -6,17 +6,9 @@ module.exports = {
       primaryKey: true,
       autoIncrement: true
     },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false
+    dateCompleted: {
+      allowNull: false,
+      type: DataTypes.DATE
     },
     createdAt: {
       allowNull: false,
@@ -26,4 +18,4 @@ module.exports = {
       allowNull: false,
       type: DataTypes.DATE
     }
-  }
+}

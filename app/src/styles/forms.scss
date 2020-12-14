@@ -1,4 +1,4 @@
-.register-form, .login-form {
+.register-form, .login-form, .add-habit-form {
     form {
         width: 100%;
         min-width: 200px;
@@ -7,6 +7,12 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+
+        .error {
+            color: $red;
+            font-size: 12px;
+            text-transform: capitalize;
+        }
     }
 
     h3 {
@@ -21,16 +27,25 @@
         width: 100%;
     }
 
-    input {
+    input, select, textarea {
         border: none;
         outline: none;
         margin-top: $md;
-        border-bottom: 1px solid $teal;
+        border-bottom: 1px solid $black;
         font-family: $font-secondary;
         font-size: 18px;
         width: 100%;
         border-radius: 3px;
         padding: $sm;
+    }
+
+    input[type="number"] {
+        width: 80px;
+        margin-left: $xl;
+    }
+
+    textarea {
+        border: 1px solid $black;
     }
 
     input:focus {
@@ -51,5 +66,48 @@
         svg {
             width: 60px;
         }
+    }
+
+    .form__extra {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+
+        a {
+            white-space: nowrap;
+        }
+    }
+}
+
+.color-select {
+    margin-bottom: $xl;
+}
+
+.color-select__options {
+
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: $md;
+    color: $black;
+
+    .color-select__option--selected {
+        border: 1px solid $teal;
+    }
+
+
+    label {
+        width: $xxl;
+        margin: $md;
+        border-radius: 3px;
+    }
+
+    input {
+        cursor: pointer;
+        margin: 0;
+    }
+
+    input:focus {
+        outline: none
     }
 }

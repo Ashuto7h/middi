@@ -7,5 +7,6 @@ export const initialState: AppState = {
     },
     messages: [],
     actions: [],
-    eventEmitted: null
+    eventEmitted: null,
+    habits: []
 };

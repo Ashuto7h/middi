@@ -7,6 +7,7 @@ export const LAST_MESSAGE_REMOVED = 'LAST_MESSAGE_REMOVED';
 export const ACTIONS_SET = 'ACTIONS_SET';
 export const EMIT_EVENT = 'EMIT_EVENT';
 export const SET_STATE = 'SET_STATE';
+export const SET_HABITS = 'SET_HABITS';
 
 export const reducer = (state: AppState, action: { type: string, payload: any}): AppState => {
   console.log(action);
@@ -42,6 +43,11 @@ export const reducer = (state: AppState, action: { type: string, payload: any}):
       return {
         ...state,
         eventEmitted: action.payload
+      }
+    case SET_HABITS:
+      return {
+        ...state,
+        habits: action.payload
       }
     case SET_STATE:
       return action.payload;

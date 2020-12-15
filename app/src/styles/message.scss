@@ -80,6 +80,15 @@
     .message::after {
         bottom: 64px;
     }
+
+    .message--loading:after {
+        bottom: 40px;
+    }
+
+    .message:not(.message--loading) .avatar {
+        width: 40px;
+        right: -10px;
+    }
 }
 
 @keyframes fade-in-slide-left {

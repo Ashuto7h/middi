@@ -1,7 +1,7 @@
 import { Message } from '../types';
 import { registrationSequence, loginSequence } from './auth';
 import { v4 as uuid } from 'uuid';
-import { addHabitSequence, viewHabitListSequence } from './habits';
+import { addHabitSequence, viewCompleteHabitListSequence, viewHabitListSequence } from './habits';
 
 export const startMessages: Message = {
     messageClass: 'message--grouped',
@@ -12,16 +12,23 @@ export const startMessages: Message = {
     uuid: uuid(),
     dispatchOnSend: {
         type: 'ACTIONS_SET',
-        payload: [{
-            uuid: uuid(),
-            label: 'Complete a habit',
-            callback: viewHabitListSequence
-        },
-        {
-            uuid: uuid(),
-            label: 'View my weekly progress',
-            callback: addHabitSequence
-        }]
+        payload: [
+            {
+                uuid: uuid(),
+                label: 'View my habits',
+                callback: viewHabitListSequence
+            },
+            {
+                uuid: uuid(),
+                label: 'Complete a habit',
+                callback: viewCompleteHabitListSequence
+            },
+            {
+                uuid: uuid(),
+                label: 'Weekly overview',
+                callback: addHabitSequence
+            }
+        ]
     }
 }
 

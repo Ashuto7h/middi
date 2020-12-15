@@ -3,7 +3,7 @@ import { AppContext } from '../App';
 import { Events } from '../types';
 import env from '../env';
 import Loading from './Loading';
-import { ReactComponent as Done } from './done.svg';
+import { ReactComponent as Done } from './icons/done.svg';
 import { EMIT_EVENT } from '../state/appReducer';
 import { getHabits } from '../state/api';
 import ColorSelect from './ColorSelect';
@@ -20,7 +20,7 @@ const AddHabitForm = () => {
         name: '',
         description: '',
         color: '',
-        weeklyGoal: 7
+        weeklyGoal: 1
     };
     const { appState, dispatch } = useContext(AppContext);
     const [formData, setFormData] = useState<HabitForm>(defaultForm);
@@ -35,9 +35,13 @@ const AddHabitForm = () => {
     }, [appState.eventEmitted])
 
     const handleInputChange = (event: React.ChangeEvent<any>) => {
+        let value = event.target.value;
+        if (event.target.name === 'weeklyGoal') {
+            value = parseInt(value);
+        }
         setFormData({
             ...formData,
-            [event.target.name]: event.target.value
+            [event.target.name]: value
         });
     }
 
@@ -85,7 +89,7 @@ const AddHabitForm = () => {
                             <label>Description (optional) <textarea name="description" rows={4} onChange={handleInputChange} /></label>
                             <ColorSelect onColorSelect={handleInputChange} />
                             <label>Weekly goal - how many times a week are you aiming to complete this goal?
-                                <select onChange={handleInputChange}>
+                                <select name="weeklyGoal" onChange={handleInputChange}>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>

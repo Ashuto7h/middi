@@ -4,7 +4,7 @@ import RegisterForm from '../components/RegisterForm';
 import { AppState, Events, Message } from '../types';
 import LoginForm from '../components/LoginForm';
 import { v4 as uuid } from 'uuid';
-import { addHabitSequence } from './habits';
+import { addHabitSequence, viewCompleteHabitListSequence, viewHabitListSequence } from './habits';
 
 export const registrationSequence = (): void => {
     // Add registration component
@@ -123,8 +123,8 @@ export const postLoginSequence = (name: string, state: AppState) => {
                 type: 'ACTIONS_SET',
                 payload: [{
                     uuid: uuid(),
-                    label: 'View my habits',
-                    callback: addHabitSequence
+                    label: 'Complete a habit',
+                    callback: viewCompleteHabitListSequence
                 },
                 {
                     uuid: uuid(),

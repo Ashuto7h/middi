@@ -4,7 +4,7 @@ import { Events } from '../types';
 import env from '../env';
 import Loading from './Loading';
 import { postRegistrationSequence, loginSequence } from '../sequences/auth';
-import { ReactComponent as Done } from './done-shield.svg';
+import { ReactComponent as Done } from './icons/done-shield.svg';
 
 type RegisterForm = {
     email: string;

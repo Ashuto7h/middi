@@ -3,34 +3,34 @@
 .action-button {
     border-radius: $border-radius-lg;
     outline: none;
-    border: 0;
+    border: 1px solid $bright-pink;
     background: none;
-    box-shadow: none;
-    background: linear-gradient(180deg, $dark-purple 0%, $teal 100%);
+    box-shadow: 0 4px 10px rgba($bright-pink, .25);
+    background: $pink;
     font-family: $font-primary;
     font-size: 14px;
     text-align: center;
     padding: $xs $lg;
-    color: white;
+    color: $bright-pink;
     font-weight: bold;
     height: 55px;
+    min-width: 80px;
     margin-left: $lg;
+    margin-top: $md;
     cursor: pointer;
     white-space: nowrap;
     animation: fade-in-slide-up 0.6s ease 0s 1;
 }
 
 .action-button:hover {
-    box-shadow: 0 0 10px $teal;
-    border: 1px solid $teal;
-    box-sizing: border-box;
+    box-shadow: 0 4px 10px rgba($bright-pink, .75);
 }
 
 @media screen and (max-width: $break-point-mobile) {
     .action-button {
         padding: $sm $lg;
-        font-size: 14px;
-        height: 45px;
+        font-size: 12px;
+        height: 40px;
     }
 }
 

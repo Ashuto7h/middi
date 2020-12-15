@@ -4,12 +4,6 @@ import * as types from '../types';
 import Message from './Message';
 import ActionButton from './ActionButton';
 
-const AlwaysScrollToBottom = () => {
-  const elementRef = useRef<any>();
-  useEffect(() => elementRef.current.scrollIntoView());
-  return <div ref={elementRef} />;
-};
-
 const ChatBox = () => {
   const { appState, dispatch } = useContext<types.Context>(AppContext);
   const [queueIndex, setQueueIndex] = useState<number>(0);
@@ -42,7 +36,6 @@ const ChatBox = () => {
         {messages.map((message: types.Message) => (
           message && <>
             <Message message={message} key={message.uuid} />
-            <AlwaysScrollToBottom key={`${message.uuid}x`}/>
           </>
         ))}
       </div>

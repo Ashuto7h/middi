@@ -4,7 +4,7 @@ import { Events } from '../types';
 import env from '../env';
 import Loading from './Loading';
 import { postLoginSequence, registrationSequence } from '../sequences/auth';
-import { ReactComponent as Done } from './done-shield.svg';
+import { ReactComponent as Done } from './icons/done-shield.svg';
 import { EMIT_EVENT } from '../state/appReducer';
 
 type LoginForm = {
@@ -82,7 +82,7 @@ const LoginForm = () => {
                 {(!loading && !submitted) &&
                     <div className="form__extra">
                         <p className="error">{ error }</p>
-                        <a onClick={registrationSequence}>Sign Up</a>
+                        <a onClick={registrationSequence}>Sign up instead</a>
                     </div>
                 }
             </form>

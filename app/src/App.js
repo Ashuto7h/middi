@@ -6,6 +6,7 @@ import './components/ChatBox';
 import ChatBox from './components/ChatBox';
 import dispatchHelper from './state/dispatchHelper';
 import { getAuthorizedUser, getHabits } from './state/api';
+import GoalAchievementParty from './components/GoalAchievementParty';
 
 export const AppContext = createContext();
 
@@ -33,6 +34,7 @@ const App = () => {
         <header className="header">Middi</header>
         {!loading && <ChatBox loggedIn={false} />}
       </div>
+      <GoalAchievementParty />
     </AppContext.Provider>
   );
 }

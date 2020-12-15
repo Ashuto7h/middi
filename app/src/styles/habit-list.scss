@@ -1,4 +1,20 @@
 
+.habits {
+    .habits__description {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start !important;
+        font-size: 14px;
+
+        p {
+            width: 100% !important;
+            margin: 0;
+            font-size: 12px;
+        }
+    }
+}
+
 .habit-list {
 
     .habit-list__title {
@@ -25,6 +41,7 @@
     justify-content: space-between;
     color: $black;
     position: relative;
+    flex-wrap: wrap;
 
     @each $color in $habitColors {
         &.habit-list__item--hc#{index($habitColors, $color)} {
@@ -37,6 +54,7 @@
                 display: flex;
                 align-items: center;
                 animation: label-fade-in-and-up 0.4s ease 0s 1;
+                width: 80px;
             }
         }
     }
@@ -45,6 +63,10 @@
         display: flex;
         align-items: center;
     }
+}
+
+.item-status--transparent {
+    color: transparent !important;
 }
 
 .balloons {
@@ -77,5 +99,25 @@
 @keyframes float-balloons {
     100% {
         transform: translateY(-900px);
+    }
+}
+
+@media screen and (max-width: $break-point-mobile) {
+    .habit-list__item {
+        height: 140px;
+        justify-content: flex-end;
+
+        > div {
+            margin-top: $md;
+            text-align: right;
+        }
+
+        button {
+            margin-top: $md;
+        }
+    }
+    .habits__description p {
+        font-size: 10px !important;
+        text-align: right;
     }
 }

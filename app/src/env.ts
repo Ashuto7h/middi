@@ -11,12 +11,11 @@ const env: EnvType = {
     habitColors: {
         hc1: '#FFADAD',
         hc2: '#FFD6A5',
-        hc3: '#FDFFB6',
-        hc4: '#CAFFBF',
-        hc5: '#9BF6FF',
-        hc6: '#A0C4FF',
-        hc7: '#BDB2FF',
-        hc8: '#FFC6FF'
+        hc3: '#CAFFBF',
+        hc4: '#9BF6FF',
+        hc5: '#A0C4FF',
+        hc6: '#BDB2FF',
+        hc7: '#FFC6FF'
     }
 };
 

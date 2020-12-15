@@ -23,6 +23,7 @@ body {
 .app, #root {
     width: 100%;
     height: 100%;
+    overflow: hidden;
 }
 
 .header {
@@ -38,6 +39,37 @@ p {
 
 a {
     cursor: pointer;
+    text-decoration: underline;
+}
+
+.button {
+    border-radius: $border-radius-lg;
+    outline: none;
+    border: 1px solid $pink;
+    background: none;
+    box-shadow: 0 4px 10px rgba($dark-pink, .25);
+    background: $pink;
+    font-family: $font-primary;
+    font-size: 12px;
+    text-align: center;
+    padding: $xs $lg;
+    color: $bright-pink;
+    font-weight: bold;
+    height: 35px;
+    min-width: 80px;
+    margin-left: $lg;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.button:hover {
+    box-shadow: 0 1px 5px rgba($bright-pink, .75);
+}
+
+.confetti-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
 
 @media screen and (max-width: $break-point-mobile) {

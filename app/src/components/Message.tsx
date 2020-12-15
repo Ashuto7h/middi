@@ -1,8 +1,14 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import * as types from '../types';
 import Loading from './Loading';
 import { AppContext } from '../App';
-import { ReactComponent as Avatar } from './avatar.svg';
+import { ReactComponent as Avatar } from './icons/avatar.svg';
+
+const AlwaysScrollToBottom = () => {
+    const elementRef = useRef<any>();
+    useEffect(() => elementRef.current.scrollIntoView(), []);
+    return <div ref={elementRef} />;
+  };
 
 type MessageProps = {
     message: types.Message;
@@ -36,14 +42,16 @@ const Message = ({ message }: MessageProps) => {
                 (typing
                     ? showLoader && <div className="message message--loading">
                         <Loading />
+                        <AlwaysScrollToBottom key={`${message.uuid}x`}/>
                     </div>
                     : <>
                         <div className={`message message--sender-${sender} ${messageClass}`}>
                             {messageClass === 'message--initial' && <Avatar />}
                             {messageClass === 'message--component'
-                                ? <Component />
+                                ? message.componentProps ? <Component {...message.componentProps} /> : <Component />
                                 : <p>{ text }</p>
                             }
+                            <AlwaysScrollToBottom key={`${message.uuid}x`}/>
                         </div>
                     </>
                 )

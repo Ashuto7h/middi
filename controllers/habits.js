@@ -32,7 +32,10 @@ router.get('/', async (req, res) => {
             }
             db.Habit.findAll({
                 where: { UserId: user.id },
-                include: db.CompletedTask
+                include: [
+                    db.CompletedTask,
+                    db.CompletedGoal
+                ]
             })
                 .then(habits => {
                     console.log(habits);

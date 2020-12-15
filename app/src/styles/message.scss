@@ -76,6 +76,10 @@
     .message p {
         font-size: 14px;
     }
+
+    .message::after {
+        bottom: 64px;
+    }
 }
 
 @keyframes fade-in-slide-left {

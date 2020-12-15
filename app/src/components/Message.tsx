@@ -40,7 +40,7 @@ const Message = ({ message }: MessageProps) => {
                     : <>
                         <div className={`message message--sender-${sender} ${messageClass}`}>
                             {messageClass === 'message--initial' && <Avatar />}
-                            {messageClass === 'component'
+                            {messageClass === 'message--component'
                                 ? <Component />
                                 : <p>{ text }</p>
                             }

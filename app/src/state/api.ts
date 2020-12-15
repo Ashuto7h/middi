@@ -1,7 +1,7 @@
 import env from '../env';
 import dispatchHelper from './dispatchHelper';
 import { authenticatedIntroSequence, unauthenticatedIntroSequence } from '../sequences/introduction';
-import { AppState } from '../types';
+import { AppState, CompletedTask } from '../types';
 import { AUTH_STATE_CHANGED, SET_HABITS, SET_STATE } from './appReducer';
 
 export const getAuthorizedUser = (appState: AppState) => {
@@ -67,5 +67,17 @@ export const getHabits = () => {
         }
     });
 } 
+
+export const saveTaskState = (task: CompletedTask, method: 'DELETE' | 'POST') => {
+  return fetch(`${env.apiUrl}/completed-tasks`, {
+    credentials: 'include',
+    method,
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(task)
+  })
+  .then(res => res.json())
+}
 
 export const addPuff = () => {}

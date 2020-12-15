@@ -4,7 +4,7 @@ import { Events } from '../types';
 import env from '../env';
 import Loading from './Loading';
 import { postLoginSequence, registrationSequence } from '../sequences/auth';
-import { ReactComponent as Done } from './done.svg';
+import { ReactComponent as Done } from './done-shield.svg';
 import { EMIT_EVENT } from '../state/appReducer';
 
 type LoginForm = {

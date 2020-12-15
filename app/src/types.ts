@@ -4,7 +4,7 @@ export type Action = {
     callback: Function;
 }
 
-type MessageClasses = 'message--initial' | 'message--grouped' | 'component';
+type MessageClasses = 'message--initial' | 'message--grouped' | 'message--component';
 export type Message = {
     uuid?: string;
     messageClass: MessageClasses;
@@ -48,15 +48,15 @@ export type Habit = {
     description: string;
     color: string;
     weeklyGoal: number;
-    createdAt: string;
-    updatedAt: string;
-    completedTasks?: CompletedTask[]
+    createdAt?: string;
+    updatedAt?: string;
+    CompletedTasks: CompletedTask[]
 }
 
 export type CompletedTask = {
-    id: number;
-    habitId: number;
+    id?: number;
+    HabitId: number;
     dateCompleted: string;
-    createdAt: string;
-    updatedAt: string;
+    createdAt?: string;
+    updatedAt?: string;
 }

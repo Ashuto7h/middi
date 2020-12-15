@@ -33,7 +33,7 @@ User.hasMany(Habit, {
 });
 Habit.belongsTo(User);
 
-sequelize.sync({ alter: true })
+//sequelize.sync({ alter: true })
 db.Habit = Habit;
 db.CompletedTask = CompletedTask;
 db.User = User;

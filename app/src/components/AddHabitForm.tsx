@@ -79,11 +79,11 @@ const AddHabitForm = () => {
                     ? <Loading />
                     : !submitted 
                         ? <>
-                            <label>Name <input name="email" type="text" onChange={handleInputChange} 
+                            <label>Name <input name="name" type="text" onChange={handleInputChange} 
                                 placeholder="Drink 3 glasses of water, Do 10 pushups..."
                             /></label>
                             <label>Description (optional) <textarea name="description" rows={4} onChange={handleInputChange} /></label>
-                            <ColorSelect />
+                            <ColorSelect onColorSelect={handleInputChange} />
                             <label>Weekly goal - how many times a week are you aiming to complete this goal?
                                 <select onChange={handleInputChange}>
                                     <option value="1">1</option>

@@ -1,5 +1,6 @@
 import { AppState, Events } from '../types';
 import { v4 as uuid } from 'uuid';
+import { addCompletedTask, removeCompletedTask } from './modifiers';
 
 export const AUTH_STATE_CHANGED = "AUTH_STATE_CHANGED";
 export const MESSAGE_ADDED = 'MESSAGE_ADDED';
@@ -8,6 +9,8 @@ export const ACTIONS_SET = 'ACTIONS_SET';
 export const EMIT_EVENT = 'EMIT_EVENT';
 export const SET_STATE = 'SET_STATE';
 export const SET_HABITS = 'SET_HABITS';
+export const ADD_COMPLETED_TASK = 'ADD_COMPLETED_TASK';
+export const REMOVE_COMPLETED_TASK = 'REMOVE_COMPLETED_TASK';
 
 export const reducer = (state: AppState, action: { type: string, payload: any}): AppState => {
   console.log(action);
@@ -49,6 +52,10 @@ export const reducer = (state: AppState, action: { type: string, payload: any}):
         ...state,
         habits: action.payload
       }
+    case ADD_COMPLETED_TASK:
+      return addCompletedTask(state, action.payload);
+    case REMOVE_COMPLETED_TASK:
+      return removeCompletedTask(state, action.payload);
     case SET_STATE:
       return action.payload;
   }

@@ -30,6 +30,8 @@
     flex-direction: column;
     padding: $lg $xxl;
     overflow: scroll;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 @media screen and (max-width: $break-point-mobile) {

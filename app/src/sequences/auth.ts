@@ -11,7 +11,8 @@ export const registrationSequence = (): void => {
     dispatchHelper.dispatch({
         type: MESSAGE_ADDED,
         payload: {
-            messageClass: 'component',
+            messageClass: 'message--component',
+            uuid: uuid(),
             sender: 'bot',
             text: null,
             delay: 1000,
@@ -40,7 +41,8 @@ export const loginSequence = (): void => {
     dispatchHelper.dispatch({
         type: MESSAGE_ADDED,
         payload: {
-            messageClass: 'component',
+            messageClass: 'message--component',
+            uuid: uuid(),
             sender: 'bot',
             text: null,
             delay: 1000,
@@ -69,6 +71,7 @@ export const postRegistrationSequence = (name: string) => {
         type: MESSAGE_ADDED,
         payload: {
             messageClass: 'message--inital',
+            uuid: uuid(),
             sender: 'bot',
             text: `Nice to meet you ${name}! We're on our way to building healthy habits 🚀`,
             delay: 1500,
@@ -83,7 +86,17 @@ export const postRegistrationSequence = (name: string) => {
             sender: 'bot',
             text: `First thing's first though, let's get a habit set up for you to track`,
             delay: 2500,
-            showLoader: true
+            showLoader: true,
+            uuid: uuid(),
+            dispatchOnSend: {
+                type: 'ACTIONS_SET',
+                payload: [
+                {
+                    uuid: uuid(),
+                    label: 'Add a habit',
+                    callback: addHabitSequence
+                }]
+            }
         }
     });
 }

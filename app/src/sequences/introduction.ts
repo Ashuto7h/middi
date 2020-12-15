@@ -1,7 +1,29 @@
 import { Message } from '../types';
 import { registrationSequence, loginSequence } from './auth';
 import { v4 as uuid } from 'uuid';
-import { addHabitSequence } from './habits';
+import { addHabitSequence, viewHabitListSequence } from './habits';
+
+export const startMessages: Message = {
+    messageClass: 'message--grouped',
+    sender: 'bot',
+    text: `How can I help you?`,
+    delay: 1500,
+    showLoader: true,
+    uuid: uuid(),
+    dispatchOnSend: {
+        type: 'ACTIONS_SET',
+        payload: [{
+            uuid: uuid(),
+            label: 'Complete a habit',
+            callback: viewHabitListSequence
+        },
+        {
+            uuid: uuid(),
+            label: 'View my weekly progress',
+            callback: addHabitSequence
+        }]
+    }
+}
 
 export const unauthenticatedIntroSequence = (): Message[] => [{
     messageClass: 'message--initial',
@@ -50,31 +72,12 @@ export const unauthenticatedIntroSequence = (): Message[] => [{
 }]
 
 export const authenticatedIntroSequence = (name: string): Message[] => [{
-    messageClass: 'message--initial',
-    sender: 'bot',
-    text: `Hi ${name}! Good to see you again 🙂`,
-    delay: 500,
-    showLoader: false,
-    uuid: uuid()
-},
-{
-    messageClass: 'message--grouped',
-    sender: 'bot',
-    text: `How can I help you?`,
-    delay: 1500,
-    showLoader: true,
-    uuid: uuid(),
-    dispatchOnSend: {
-        type: 'ACTIONS_SET',
-        payload: [{
-            uuid: uuid(),
-            label: 'Complete a habit',
-            callback: addHabitSequence
-        },
-        {
-            uuid: uuid(),
-            label: 'View my weekly progress',
-            callback: addHabitSequence
-        }]
-    }
-}]
+        messageClass: 'message--initial',
+        sender: 'bot',
+        text: `Hi ${name}! Good to see you again 🙂`,
+        delay: 500,
+        showLoader: false,
+        uuid: uuid()
+    },
+    startMessages
+]

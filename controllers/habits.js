@@ -9,7 +9,7 @@ router.post('/', async (req, res) => {
         (err, user) => {
             db.Habit.create({
                 ...req.body,
-                userId: user.id
+                UserId: user.id
             })
                 .then(habit => {
                     res.status(200).send({ habit });
@@ -25,6 +25,7 @@ router.get('/', async (req, res) => {
       await passport.authenticate('jwt', 
         { session: false },
         (err, user) => {
+            console.log(user);
             if (err) {
                 console.log(err);
                 res.status(500).send({ err: { message: err }});

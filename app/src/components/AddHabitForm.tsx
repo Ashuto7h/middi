@@ -1,27 +1,29 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, ReactElement } from 'react';
 import { AppContext } from '../App';
 import { Events } from '../types';
 import env from '../env';
 import Loading from './Loading';
 import { ReactComponent as Done } from './icons/done.svg';
 import { EVENT_EMITTED } from '../state/appReducer';
-import { getHabits } from '../state/api';
+import { createHabit, getHabits, updateHabit } from '../state/api';
 import ColorSelect from './ColorSelect';
-import { postHabitCreateSequence } from '../sequences/habits';
+import { postHabitCreateSequence, postHabitUpdateSequence } from '../sequences/habits';
 
 type HabitForm = {
+    id?: number;
     name: string;
     description: string;
     color: string;
     weeklyGoal: number;
+    editing?: boolean;
 };
 
-const AddHabitForm = () => {
+const AddHabitForm = ({ id, name, description, color, weeklyGoal, editing }: HabitForm) => {
     const defaultForm = {
-        name: '',
-        description: '',
-        color: '',
-        weeklyGoal: 1
+        name: name || '',
+        description: description || '',
+        color: color || '',
+        weeklyGoal: weeklyGoal || 1
     };
     const { appState, dispatch } = useContext(AppContext);
     const [formData, setFormData] = useState<HabitForm>(defaultForm);
@@ -34,7 +36,7 @@ const AddHabitForm = () => {
         if (appState.eventEmitted === Events.HABIT_FORM_SUBMITTED && !disabled) {
             submit();
         }
-        else if (appState.eventEmitted === Events.HABIT_FORM_SUBMITTED) {
+        else if (appState.eventEmitted === Events.HABIT_FORM_SUBMITTED && (formData.name && formData.color)) {
             setDisabled(true);
         }
     }, [appState.eventEmitted])
@@ -49,21 +51,23 @@ const AddHabitForm = () => {
             [event.target.name]: value
         });
     }
+    
 
     const submit = () => {
         setError('')
+        let promise: Promise<any>;
         if (formData.name && formData.color) {
             setLoading(true);
-            fetch(`${env.apiUrl}/habits`, {
-                method: 'POST',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(res => res.json())
-            .then(res => {
+            if (editing) {
+                promise = updateHabit({
+                    ...formData,
+                    id
+                });
+            }
+            else {
+                promise = createHabit(formData);
+            }
+            promise.then(res => {
                 if (res.err) {
                     setLoading(false);
                     setError(res.err.message);
@@ -72,7 +76,7 @@ const AddHabitForm = () => {
                     setLoading(false);
                     setSubmitted(true)
                     getHabits();
-                    postHabitCreateSequence();
+                    editing ? postHabitUpdateSequence() : postHabitCreateSequence();
                 }
                 dispatch({
                     type: EVENT_EMITTED,
@@ -85,6 +89,13 @@ const AddHabitForm = () => {
         }
     }
 
+    const generateOptions = (): ReactElement[] => {
+        const weekDays = [1, 2, 3, 4, 5, 6, 7];
+        return weekDays.map((day: number) => (
+            <option selected={formData.weeklyGoal === day} value={`${day}`}>{day}</option>
+        ));
+    };
+
     return (
         <div className="form add-habit-form">
             <form>
@@ -93,20 +104,22 @@ const AddHabitForm = () => {
                     ? <Loading />
                     : !submitted 
                         ? <>
-                            <label>Name <input name="name" type="text" maxLength={150} onChange={handleInputChange} 
+                            <label>Name <input name="name" defaultValue={formData.name} type="text" maxLength={150} onChange={handleInputChange} 
                                 placeholder="Drink 3 glasses of water, Do 10 pushups..."
                             /></label>
-                            <label>Description (optional) <textarea name="description" rows={4} maxLength={300} onChange={handleInputChange} /></label>
-                            <ColorSelect onColorSelect={handleInputChange} />
+                            <label>Description (optional) 
+                                <textarea 
+                                    name="description" 
+                                    defaultValue={formData.description} 
+                                    rows={4} 
+                                    maxLength={300} 
+                                    onChange={handleInputChange}
+                                />
+                            </label>
+                            <ColorSelect onColorSelect={handleInputChange} defaultValue={formData.color} />
                             <label>Weekly goal - how many times a week are you aiming to complete this goal?
                                 <select name="weeklyGoal" onChange={handleInputChange}>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
+                                    {generateOptions()}
                                 </select>
                             </label>
                         </>

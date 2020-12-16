@@ -3,6 +3,25 @@ import { registrationSequence, loginSequence } from './auth';
 import { v4 as uuid } from 'uuid';
 import { addHabitSequence, viewCompleteHabitListSequence, viewHabitListSequence } from './habits';
 
+
+export const mainButtons = [
+    {
+        uuid: uuid(),
+        label: 'View my habits',
+        callback: viewHabitListSequence
+    },
+    {
+        uuid: uuid(),
+        label: 'Complete a habit',
+        callback: viewCompleteHabitListSequence
+    },
+    {
+        uuid: uuid(),
+        label: 'Add a habit',
+        callback: addHabitSequence
+    }
+]
+
 export const startMessages: Message = {
     messageClass: 'message--grouped',
     sender: 'bot',
@@ -12,23 +31,7 @@ export const startMessages: Message = {
     uuid: uuid(),
     dispatchOnSend: {
         type: 'ACTIONS_SET',
-        payload: [
-            {
-                uuid: uuid(),
-                label: 'View my habits',
-                callback: viewHabitListSequence
-            },
-            {
-                uuid: uuid(),
-                label: 'Complete a habit',
-                callback: viewCompleteHabitListSequence
-            },
-            {
-                uuid: uuid(),
-                label: 'Add a habit',
-                callback: addHabitSequence
-            }
-        ]
+        payload: mainButtons
     }
 }
 

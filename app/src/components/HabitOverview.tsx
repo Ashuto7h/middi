@@ -20,6 +20,7 @@ import { faCog } from '@fortawesome/free-solid-svg-icons'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { deleteHabit } from '../state/api';
+import { updateHabitSequence } from '../sequences/habits';
 
 type WeekDayProps = {
     date: Date;
@@ -83,6 +84,10 @@ const HabitOverview = ({ habitId }: HabitOverviewProps) => {
         deleteHabit(habit);
     }
 
+    const onEditHabit = () => {
+        updateHabitSequence(habit);
+    }
+
     return (
         habit ? <div className={`habit-overview habit-overview--${colorKey}`}>
             <div className="habit-overview__header">
@@ -96,7 +101,7 @@ const HabitOverview = ({ habitId }: HabitOverviewProps) => {
                             <FontAwesomeIcon icon={faCog} />
                         </button>}
                         direction="left">
-                        <MenuItem><FontAwesomeIcon icon={faPencilAlt} /> Edit</MenuItem>
+                        <MenuItem onClick={onEditHabit}><FontAwesomeIcon icon={faPencilAlt} /> Edit</MenuItem>
                         <MenuItem onClick={onDeleteHabit}><FontAwesomeIcon icon={faTrash} /> Delete</MenuItem>
                     </Menu>
                 </div>

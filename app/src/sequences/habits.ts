@@ -4,14 +4,12 @@ import dispatchHelper from '../state/dispatchHelper';
 import { ACTIONS_SET, MESSAGE_ADDED, EVENT_EMITTED, LAST_MESSAGE_REMOVED } from '../state/appReducer';
 import AddHabitForm from '../components/AddHabitForm';
 import HabitList from '../components/HabitList';
-import { startMessages } from './introduction';
+import { startMessages, mainButtons } from './introduction';
 import Habits from '../components/Habits';
 import HabitOverview from '../components/HabitOverview';
-import { start } from 'repl';
 
 
 export const addHabitSequence = () => {
-    const formId = uuid();
     dispatchHelper.dispatch({
         type: MESSAGE_ADDED,
         payload: {
@@ -194,3 +192,72 @@ export const postHabitCreateSequence = () => {
         }
     });
 };
+
+export const postHabitUpdateSequence = () => {
+    dispatchHelper.dispatch({
+        type: MESSAGE_ADDED,
+        payload: {
+            messageClass: 'message--initial',
+            sender: 'bot',
+            text: `You're all set! That habit's been updated`,
+            delay: 500,
+            showLoader: false,
+            uuid: uuid(),
+            dispatchOnSend: {
+                type: 'ACTIONS_SET',
+                payload: mainButtons
+            }
+        }
+    });
+};
+
+export const updateHabitSequence = (habit: Habit) => {
+    dispatchHelper.dispatch({
+        type: MESSAGE_ADDED,
+        payload: {
+            messageClass: 'message--component',
+            uuid: uuid(),
+            sender: 'bot',
+            text: null,
+            delay: 1000,
+            showLoader: false,
+            Component: AddHabitForm,
+            componentProps: {
+                ...habit,
+                editing: true
+            }
+        }
+    });
+
+    // Submit button
+    dispatchHelper.dispatch({
+        type: ACTIONS_SET,
+        payload: [
+            { 
+                uuid: uuid(),
+                label: 'Submit', 
+                callback: () => {
+                    dispatchHelper.dispatch({
+                        type: EVENT_EMITTED,
+                        payload: Events.HABIT_FORM_SUBMITTED
+                })
+            }},
+            { 
+                uuid: uuid(),
+                label: 'Cancel', 
+                callback: () => {
+                    dispatchHelper.dispatch({
+                        type: EVENT_EMITTED,
+                        payload: Events.ACTION_CANCELLED
+                    })
+                    dispatchHelper.dispatch({
+                        type: MESSAGE_ADDED,
+                        payload: {
+                            ...startMessages,
+                            text: `What's next?`
+                        }
+                })
+            }}
+        ]
+    })
+}

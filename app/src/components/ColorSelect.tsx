@@ -1,12 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import env from '../env';
 
 type ColorSelectProps = {
     onColorSelect: Function
+    defaultValue: string
 }
 
-const ColorSelect = ({ onColorSelect }: ColorSelectProps) => {
+const ColorSelect = ({ onColorSelect, defaultValue }: ColorSelectProps) => {
     const [selectedColor, setSelectedColor] = useState('');
+
+    useEffect(() => {
+        if (defaultValue) {
+            setSelectedColor(defaultValue);
+        }
+    }, [])
 
     const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedColor(e.target.value);
@@ -23,7 +30,7 @@ const ColorSelect = ({ onColorSelect }: ColorSelectProps) => {
                         style={{backgroundColor: color}} 
                         className={color === selectedColor ? `color-select__option--selected` : 'color-select__option'}
                     >
-                        <input type="radio" name="color" value={color} onChange={handleSelect} />
+                        <input type="radio" name="color" value={color} onChange={handleSelect} checked={selectedColor === color} />
                     </label>
                 ))}
             </div>

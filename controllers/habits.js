@@ -66,4 +66,33 @@ router.delete('/', async (req, res) => {
       })(req, res)
 });
 
+router.patch('/', async (req, res) => {
+    await passport.authenticate('jwt', 
+      { session: false },
+      async (err, user) => {
+        const habit = await db.Habit.findOne({
+            where: {
+                id: req.body.id
+            }
+        });
+        if (habit) {
+            const { name, description, color, weeklyGoal } = req.body;
+            habit.name = name;
+            habit.description = description;
+            habit.color = color;
+            habit.weeklyGoal = weeklyGoal;
+            habit.save().then(habit => {
+                res.status(200).send({ habit });
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(500).send({ err });
+            })
+        }
+        else {
+            res.status(404).send({ err: { message: 'Habit does not exist' } });
+        }
+      })(req, res)
+});
+
 module.exports = router;

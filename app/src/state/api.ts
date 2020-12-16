@@ -109,3 +109,27 @@ export const deleteHabit = (habit: Habit) => {
     return res.json()
   });
 }
+
+export const createHabit = (habit: Partial<Habit>) => {
+  return fetch(`${env.apiUrl}/habits`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(habit)
+  })
+  .then(res => res.json())
+}
+
+export const updateHabit = (habit: Partial<Habit>) => {
+  return fetch(`${env.apiUrl}/habits`, {
+    method: 'PATCH',
+    credentials: 'include',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(habit)
+  })
+  .then(res => res.json())
+}

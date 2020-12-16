@@ -6,6 +6,7 @@ import Loading from './Loading';
 import { postLoginSequence, registrationSequence } from '../sequences/auth';
 import { ReactComponent as Done } from './icons/done-shield.svg';
 import { EVENT_EMITTED } from '../state/appReducer';
+import { getHabits } from '../state/api';
 
 type LoginForm = {
     email: string;
@@ -18,10 +19,16 @@ const LoginForm = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [submitted, setSubmitted] = useState<boolean>(false);
     const [error, setError] = useState<string>(' ');
+    const [disabled, setDisabled] = useState<boolean>(false);
 
     useEffect(() => {
-        if (appState.eventEmitted === Events.LOGIN_SUBMITTED) {
-            submit();
+        if (appState.eventEmitted === Events.LOGIN_SUBMITTED && !disabled) {
+            if (formData.email && formData.password) {
+                submit();
+            }
+            else {
+                setError('Email and password are required!')
+            }
         }
     }, [appState.eventEmitted])
 
@@ -51,6 +58,7 @@ const LoginForm = () => {
             }
             else {
                 const { name } = res;
+                getHabits();
                 setLoading(false);
                 setSubmitted(true)
                 postLoginSequence(name, appState);
@@ -63,7 +71,8 @@ const LoginForm = () => {
     }
 
     const showRegistration = () => {
-
+        setDisabled(true);
+        registrationSequence();
     }
 
     return (
@@ -82,7 +91,7 @@ const LoginForm = () => {
                 {(!loading && !submitted) &&
                     <div className="form__extra">
                         <p className="error">{ error }</p>
-                        <a onClick={registrationSequence}>Sign up instead</a>
+                        <a onClick={showRegistration}>Sign up instead</a>
                     </div>
                 }
             </form>

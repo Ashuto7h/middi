@@ -7,6 +7,7 @@ import HabitList from '../components/HabitList';
 import { startMessages } from './introduction';
 import Habits from '../components/Habits';
 import HabitOverview from '../components/HabitOverview';
+import { start } from 'repl';
 
 
 export const addHabitSequence = () => {
@@ -154,3 +155,25 @@ export const viewHabitOverviewSequence = (habit: Habit) => {
         ]
     })
 }
+
+export const postHabitCreateSequence = () => {
+    dispatchHelper.dispatch({
+        type: MESSAGE_ADDED,
+        payload: {
+            messageClass: 'message--initial',
+            sender: 'bot',
+            text: `Amazing! You're all set to start tracking.`,
+            delay: 500,
+            showLoader: false,
+            uuid: uuid()
+        }
+    });
+
+    dispatchHelper.dispatch({
+        type: MESSAGE_ADDED,
+        payload: {
+            ...startMessages,
+            text: 'Use the buttons below to start tracking your progress 👇'
+        }
+    });
+};

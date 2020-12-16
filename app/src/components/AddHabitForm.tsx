@@ -7,6 +7,7 @@ import { ReactComponent as Done } from './icons/done.svg';
 import { EMIT_EVENT } from '../state/appReducer';
 import { getHabits } from '../state/api';
 import ColorSelect from './ColorSelect';
+import { postHabitCreateSequence } from '../sequences/habits';
 
 type HabitForm = {
     name: string;
@@ -66,6 +67,7 @@ const AddHabitForm = () => {
                 setLoading(false);
                 setSubmitted(true)
                 getHabits();
+                postHabitCreateSequence();
             }
             dispatch({
                 type: EMIT_EVENT,

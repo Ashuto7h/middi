@@ -1,7 +1,7 @@
 import { Events, Habit, Message } from '../types';
 import { v4 as uuid } from 'uuid';
 import dispatchHelper from '../state/dispatchHelper';
-import { ACTIONS_SET, MESSAGE_ADDED, EMIT_EVENT } from '../state/appReducer';
+import { ACTIONS_SET, MESSAGE_ADDED, EVENT_EMITTED, LAST_MESSAGE_REMOVED } from '../state/appReducer';
 import AddHabitForm from '../components/AddHabitForm';
 import HabitList from '../components/HabitList';
 import { startMessages } from './introduction';
@@ -11,6 +11,7 @@ import { start } from 'repl';
 
 
 export const addHabitSequence = () => {
+    const formId = uuid();
     dispatchHelper.dispatch({
         type: MESSAGE_ADDED,
         payload: {
@@ -33,8 +34,24 @@ export const addHabitSequence = () => {
                 label: 'Submit', 
                 callback: () => {
                     dispatchHelper.dispatch({
-                        type: EMIT_EVENT,
+                        type: EVENT_EMITTED,
                         payload: Events.HABIT_FORM_SUBMITTED
+                })
+            }},
+            { 
+                uuid: uuid(),
+                label: 'Cancel', 
+                callback: () => {
+                    dispatchHelper.dispatch({
+                        type: EVENT_EMITTED,
+                        payload: Events.ACTION_CANCELLED
+                    })
+                    dispatchHelper.dispatch({
+                        type: MESSAGE_ADDED,
+                        payload: {
+                            ...startMessages,
+                            text: `What's next?`
+                        }
                 })
             }}
         ]

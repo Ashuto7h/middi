@@ -16,7 +16,7 @@ const HabitListItem = ({ habit }: HabitListItemProps) => {
 
     return (
         <div className={`habit-list__item habit-list__item--${colorKey}`}>
-            {habit.name}
+            <span>{habit.name}</span>
             <HabitCompleteToggle habit={habit} colorKey={colorKey} date={new Date()} />
         </div>
     )

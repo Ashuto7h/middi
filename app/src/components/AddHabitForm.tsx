@@ -4,7 +4,7 @@ import { Events } from '../types';
 import env from '../env';
 import Loading from './Loading';
 import { ReactComponent as Done } from './icons/done.svg';
-import { EMIT_EVENT } from '../state/appReducer';
+import { EVENT_EMITTED } from '../state/appReducer';
 import { getHabits } from '../state/api';
 import ColorSelect from './ColorSelect';
 import { postHabitCreateSequence } from '../sequences/habits';
@@ -28,10 +28,14 @@ const AddHabitForm = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [submitted, setSubmitted] = useState<boolean>(false);
     const [error, setError] = useState<string>(' ');
+    const [disabled, setDisabled] = useState<boolean>(false);
 
     useEffect(() => {
-        if (appState.eventEmitted === Events.HABIT_FORM_SUBMITTED) {
+        if (appState.eventEmitted === Events.HABIT_FORM_SUBMITTED && !disabled) {
             submit();
+        }
+        else if (appState.eventEmitted === Events.HABIT_FORM_SUBMITTED) {
+            setDisabled(true);
         }
     }, [appState.eventEmitted])
 
@@ -48,32 +52,37 @@ const AddHabitForm = () => {
 
     const submit = () => {
         setError('')
-        setLoading(true);
-        fetch(`${env.apiUrl}/habits`, {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        })
-        .then(res => res.json())
-        .then(res => {
-            if (res.err) {
-                setLoading(false);
-                setError(res.err.message);
-            }
-            else {
-                setLoading(false);
-                setSubmitted(true)
-                getHabits();
-                postHabitCreateSequence();
-            }
-            dispatch({
-                type: EMIT_EVENT,
-                payload: ''
+        if (formData.name && formData.color) {
+            setLoading(true);
+            fetch(`${env.apiUrl}/habits`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
             })
-        });
+            .then(res => res.json())
+            .then(res => {
+                if (res.err) {
+                    setLoading(false);
+                    setError(res.err.message);
+                }
+                else {
+                    setLoading(false);
+                    setSubmitted(true)
+                    getHabits();
+                    postHabitCreateSequence();
+                }
+                dispatch({
+                    type: EVENT_EMITTED,
+                    payload: ''
+                })
+            });
+        }
+        else {
+            setError('Name and color are required!');
+        }
     }
 
     return (
@@ -84,10 +93,10 @@ const AddHabitForm = () => {
                     ? <Loading />
                     : !submitted 
                         ? <>
-                            <label>Name <input name="name" type="text" onChange={handleInputChange} 
+                            <label>Name <input name="name" type="text" maxLength={150} onChange={handleInputChange} 
                                 placeholder="Drink 3 glasses of water, Do 10 pushups..."
                             /></label>
-                            <label>Description (optional) <textarea name="description" rows={4} onChange={handleInputChange} /></label>
+                            <label>Description (optional) <textarea name="description" rows={4} maxLength={300} onChange={handleInputChange} /></label>
                             <ColorSelect onColorSelect={handleInputChange} />
                             <label>Weekly goal - how many times a week are you aiming to complete this goal?
                                 <select name="weeklyGoal" onChange={handleInputChange}>

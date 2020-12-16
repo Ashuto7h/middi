@@ -9,6 +9,7 @@
         text-align: left;
         width: 100%;
         font-weight: bold;
+        color: $black;
 
         p {
             width: 100% !important;
@@ -42,9 +43,14 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: $black;
     position: relative;
-    font-weight: bold;
+
+    > span {
+        font-weight: bold;
+        color: $black;
+        margin: 0;
+        width: 30%;
+    }
 
     @each $color in $habitColors {
         &.habit-list__item--hc#{index($habitColors, $color)} {

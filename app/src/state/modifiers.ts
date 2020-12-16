@@ -26,3 +26,14 @@ export const removeCompletedTask = (state: AppState, task: CompletedTask) => {
     newState.habits[habitIndex] = habit;
     return newState;
 };
+
+export const removeHabit = (state: AppState, habit: Habit) => {
+    const newState = { ...state };
+    const habits = newState.habits;
+    const habitIndex: number = newState.habits.findIndex((h: Habit) => h.id === habit.id);
+    if (habitIndex > -1) {
+        habits.splice(habitIndex, 1);
+    }
+    newState.habits = habits;
+    return newState;
+}

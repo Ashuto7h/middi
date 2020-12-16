@@ -1,8 +1,9 @@
 import env from '../env';
 import dispatchHelper from './dispatchHelper';
 import { authenticatedIntroSequence, unauthenticatedIntroSequence } from '../sequences/introduction';
-import { AppState, CompletedTask } from '../types';
-import { AUTH_STATE_CHANGED, SET_HABITS, SET_STATE } from './appReducer';
+import { AppState, CompletedTask, Habit } from '../types';
+import { AUTH_STATE_CHANGED, LAST_MESSAGE_REMOVED, MESSAGE_ADDED, HABITS_SET, STATE_SET, HABIT_REMOVED } from './appReducer';
+import { v4 as uuid } from 'uuid';
 
 export const getAuthorizedUser = (appState: AppState) => {
     return fetch(`${env.apiUrl}/auth/auth-user`, {
@@ -13,7 +14,7 @@ export const getAuthorizedUser = (appState: AppState) => {
       // authenticated user
       if (res.user) {
         dispatchHelper.dispatch({
-          type: SET_STATE,
+          type: STATE_SET,
           payload: {
             ...appState,
             messages: authenticatedIntroSequence(res.user.name)
@@ -30,7 +31,7 @@ export const getAuthorizedUser = (appState: AppState) => {
       else {
         // unauthenticated user
         dispatchHelper.dispatch({
-          type: SET_STATE,
+          type: STATE_SET,
           payload: {
             ...appState,
             messages: unauthenticatedIntroSequence()
@@ -41,7 +42,7 @@ export const getAuthorizedUser = (appState: AppState) => {
     .catch(res => {
       // unauthenticated user
       dispatchHelper.dispatch({
-        type: SET_STATE,
+        type: STATE_SET,
         payload: {
           ...appState,
           messages: unauthenticatedIntroSequence()
@@ -61,7 +62,7 @@ export const getHabits = () => {
         }
         else {
           dispatchHelper.dispatch({
-            type: SET_HABITS,
+            type: HABITS_SET,
             payload: res.habits
           })
         }
@@ -78,4 +79,33 @@ export const saveTaskState = (task: CompletedTask, method: 'DELETE' | 'POST') =>
     body: JSON.stringify(task)
   })
   .then(res => res.json())
+}
+
+export const deleteHabit = (habit: Habit) => {
+  return fetch(`${env.apiUrl}/habits`, {
+    credentials: 'include',
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(habit)
+  })
+  .then(res => {
+    dispatchHelper.dispatch({
+      type: HABIT_REMOVED,
+      payload: habit
+    });
+    dispatchHelper.dispatch({
+      type: MESSAGE_ADDED,
+      payload: {
+          messageClass: 'message--initial',
+          sender: 'bot',
+          text: `That habit's been deleted 👍`,
+          delay: 500,
+          showLoader: false,
+          uuid: uuid()
+      }
+    });
+    return res.json()
+  });
 }

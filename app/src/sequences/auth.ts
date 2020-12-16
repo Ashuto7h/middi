@@ -1,5 +1,5 @@
 import dispatchHelper from '../state/dispatchHelper';
-import { ACTIONS_SET, MESSAGE_ADDED, EMIT_EVENT, SET_STATE } from '../state/appReducer';
+import { ACTIONS_SET, MESSAGE_ADDED, EVENT_EMITTED, STATE_SET } from '../state/appReducer';
 import RegisterForm from '../components/RegisterForm';
 import { AppState, Events, Message } from '../types';
 import LoginForm from '../components/LoginForm';
@@ -29,7 +29,7 @@ export const registrationSequence = (): void => {
                 label: 'Submit', 
                 callback: () => {
                     dispatchHelper.dispatch({
-                        type: EMIT_EVENT,
+                        type: EVENT_EMITTED,
                         payload: Events.REGISTRATION_SUBMITTED
                 })
             }}
@@ -58,7 +58,7 @@ export const loginSequence = (): void => {
                 label: 'Submit', 
                 callback: () => {
                     dispatchHelper.dispatch({
-                        type: EMIT_EVENT,
+                        type: EVENT_EMITTED,
                         payload: Events.LOGIN_SUBMITTED
                     })
             }}
@@ -152,7 +152,7 @@ export const postLoginSequence = (name: string, state: AppState) => {
     }
 
     dispatchHelper.dispatch({
-        type: SET_STATE,
+        type: STATE_SET,
         payload: newState
     });
 }

@@ -43,7 +43,7 @@ export const unauthenticatedIntroSequence = (): Message[] => [{
 {
     messageClass: 'message--grouped',
     sender: 'bot',
-    text: `My name's Middi. I'm here to help you create healthy habits while working from home.`,
+    text: `My name's Middi 🙂 I'm here to help you create healthy habits while working from home`,
     delay: 2000,
     showLoader: true,
     uuid: uuid()
@@ -51,7 +51,7 @@ export const unauthenticatedIntroSequence = (): Message[] => [{
 {
     messageClass: 'message--grouped',
     sender: 'bot',
-    text: `You can visit any time and I'll help you measure your habit progress.`,
+    text: `You can visit any time and I'll help you measure your habit progress 📈`,
     delay: 5000,
     showLoader: true,
     uuid: uuid()

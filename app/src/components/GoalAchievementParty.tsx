@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../App';
 import Confetti from 'react-dom-confetti';
 import { Events } from '../types';
-import { EMIT_EVENT, MESSAGE_ADDED } from '../state/appReducer';
+import { EVENT_EMITTED, MESSAGE_ADDED } from '../state/appReducer';
 import { v4 as uuid } from 'uuid';
 
 const GoalAchievementParty = () => {
@@ -18,7 +18,7 @@ const GoalAchievementParty = () => {
             }, 200)
             setExplode2(true);
             dispatch({
-                type: EMIT_EVENT,
+                type: EVENT_EMITTED,
                 payload: null
             });
             dispatch({

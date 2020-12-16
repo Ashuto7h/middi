@@ -1,16 +1,17 @@
 import { AppState, Events } from '../types';
 import { v4 as uuid } from 'uuid';
-import { addCompletedTask, removeCompletedTask } from './modifiers';
+import { addCompletedTask, removeCompletedTask, removeHabit } from './modifiers';
 
 export const AUTH_STATE_CHANGED = "AUTH_STATE_CHANGED";
 export const MESSAGE_ADDED = 'MESSAGE_ADDED';
 export const LAST_MESSAGE_REMOVED = 'LAST_MESSAGE_REMOVED';
 export const ACTIONS_SET = 'ACTIONS_SET';
-export const EMIT_EVENT = 'EMIT_EVENT';
-export const SET_STATE = 'SET_STATE';
-export const SET_HABITS = 'SET_HABITS';
-export const ADD_COMPLETED_TASK = 'ADD_COMPLETED_TASK';
-export const REMOVE_COMPLETED_TASK = 'REMOVE_COMPLETED_TASK';
+export const EVENT_EMITTED = 'EVENT_EMITTED';
+export const STATE_SET = 'STATE_SET';
+export const HABITS_SET = 'HABITS_SET';
+export const COMPLETED_TASK_ADDED = 'COMPLETED_TASK_ADDED';
+export const COMPLETED_TASK_REMOVED = 'COMPLETED_TASK_REMOVED';
+export const HABIT_REMOVED = 'HABIT_REMOVED';
 
 export const reducer = (state: AppState, action: { type: string, payload: any}): AppState => {
   console.log(action);
@@ -42,21 +43,23 @@ export const reducer = (state: AppState, action: { type: string, payload: any}):
         ...state,
         auth: action.payload
       };
-    case EMIT_EVENT:
+    case EVENT_EMITTED:
       return {
         ...state,
         eventEmitted: action.payload
       }
-    case SET_HABITS:
+    case HABITS_SET:
       return {
         ...state,
         habits: action.payload
       }
-    case ADD_COMPLETED_TASK:
+    case HABIT_REMOVED:
+      return removeHabit(state, action.payload);
+    case COMPLETED_TASK_ADDED:
       return addCompletedTask(state, action.payload);
-    case REMOVE_COMPLETED_TASK:
+    case COMPLETED_TASK_REMOVED:
       return removeCompletedTask(state, action.payload);
-    case SET_STATE:
+    case STATE_SET:
       return action.payload;
   }
   return state;

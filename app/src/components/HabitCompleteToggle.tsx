@@ -5,7 +5,7 @@ import Switch from 'react-switch';
 import isSameDay from 'date-fns/isSameDay';
 import { ReactComponent as Balloons } from './icons/balloons.svg';
 import { getHabits, saveTaskState } from '../state/api';
-import { ADD_COMPLETED_TASK, EMIT_EVENT, REMOVE_COMPLETED_TASK } from '../state/appReducer';
+import { COMPLETED_TASK_ADDED, EVENT_EMITTED, COMPLETED_TASK_REMOVED } from '../state/appReducer';
 import env from '../env';
 
 type HabitCompleteToggleProps = {
@@ -39,7 +39,7 @@ const HabitCompleteToggle = ({ habit, colorKey, compact, date }: HabitCompleteTo
                 setCompletedTask(null);
                 setIsCompletedToday(val);
                 dispatch({
-                    type: REMOVE_COMPLETED_TASK,
+                    type: COMPLETED_TASK_REMOVED,
                     payload: completedTask
                 });
             });
@@ -55,14 +55,14 @@ const HabitCompleteToggle = ({ habit, colorKey, compact, date }: HabitCompleteTo
                     setIsCompletedToday(val);
                     setCompletedTask(res.completedTask);
                     dispatch({
-                        type: ADD_COMPLETED_TASK,
+                        type: COMPLETED_TASK_ADDED,
                         payload: res.completedTask
                     });
                     if (res.goalCompleted) {
                         // Trigger goal achievement party
                         getHabits();
                         dispatch({
-                            type: EMIT_EVENT,
+                            type: EVENT_EMITTED,
                             payload: Events.GOAL_COMPLETED
                         });
                     }

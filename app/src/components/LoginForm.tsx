@@ -5,7 +5,7 @@ import env from '../env';
 import Loading from './Loading';
 import { postLoginSequence, registrationSequence } from '../sequences/auth';
 import { ReactComponent as Done } from './icons/done-shield.svg';
-import { EMIT_EVENT } from '../state/appReducer';
+import { EVENT_EMITTED } from '../state/appReducer';
 
 type LoginForm = {
     email: string;
@@ -56,7 +56,7 @@ const LoginForm = () => {
                 postLoginSequence(name, appState);
             }
             dispatch({
-                type: EMIT_EVENT,
+                type: EVENT_EMITTED,
                 payload: ''
             })
         });

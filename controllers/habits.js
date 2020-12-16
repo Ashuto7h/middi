@@ -47,4 +47,23 @@ router.get('/', async (req, res) => {
         })(req, res)
 });
 
+router.delete('/', async (req, res) => {
+    await passport.authenticate('jwt', 
+      { session: false },
+      (err, user) => {
+          db.Habit.destroy({
+              where: {
+                  id: req.body.id
+              }
+          })
+              .then(async habit => {
+                  res.status(200).send({ habit });
+              })
+              .catch(err => {
+                  console.log(err);
+                  res.status(500).send({ err });
+              })
+      })(req, res)
+});
+
 module.exports = router;

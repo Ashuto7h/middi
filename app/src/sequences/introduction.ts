@@ -25,7 +25,7 @@ export const startMessages: Message = {
             },
             {
                 uuid: uuid(),
-                label: 'Weekly overview',
+                label: 'Add a habit',
                 callback: addHabitSequence
             }
         ]

@@ -63,7 +63,6 @@ const AddHabitForm = () => {
                 setError(res.err.message);
             }
             else {
-                const { name } = res;
                 setLoading(false);
                 setSubmitted(true)
                 getHabits();

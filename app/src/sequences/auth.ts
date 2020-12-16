@@ -121,16 +121,23 @@ export const postLoginSequence = (name: string, state: AppState) => {
             uuid: uuid(),
             dispatchOnSend: {
                 type: 'ACTIONS_SET',
-                payload: [{
-                    uuid: uuid(),
-                    label: 'Complete a habit',
-                    callback: viewCompleteHabitListSequence
-                },
-                {
-                    uuid: uuid(),
-                    label: 'Add a habit',
-                    callback: addHabitSequence
-                }]
+                payload: [
+                    {
+                        uuid: uuid(),
+                        label: 'View my habits',
+                        callback: viewHabitListSequence
+                    },
+                    {
+                        uuid: uuid(),
+                        label: 'Complete a habit',
+                        callback: viewCompleteHabitListSequence
+                    },
+                    {
+                        uuid: uuid(),
+                        label: 'Weekly overview',
+                        callback: addHabitSequence
+                    }
+                ]
             }
         }
     ]

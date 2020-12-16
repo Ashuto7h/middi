@@ -1,29 +1,30 @@
 {
   "files": {
-    "main.css": "/static/css/main.ee1a5b03.chunk.css",
-    "main.js": "/static/js/main.50b2de6e.chunk.js",
-    "main.js.map": "/static/js/main.50b2de6e.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.3aaedb4a.js",
-    "runtime-main.js.map": "/static/js/runtime-main.3aaedb4a.js.map",
-    "static/js/2.ffaf2016.chunk.js": "/static/js/2.ffaf2016.chunk.js",
-    "static/js/2.ffaf2016.chunk.js.map": "/static/js/2.ffaf2016.chunk.js.map",
-    "static/js/3.1b09c562.chunk.js": "/static/js/3.1b09c562.chunk.js",
-    "static/js/3.1b09c562.chunk.js.map": "/static/js/3.1b09c562.chunk.js.map",
+    "main.css": "/static/css/main.9809a8af.chunk.css",
+    "main.js": "/static/js/main.ec352e28.chunk.js",
+    "main.js.map": "/static/js/main.ec352e28.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.8fe602b3.js",
+    "runtime-main.js.map": "/static/js/runtime-main.8fe602b3.js.map",
+    "static/js/2.62276870.chunk.js": "/static/js/2.62276870.chunk.js",
+    "static/js/2.62276870.chunk.js.map": "/static/js/2.62276870.chunk.js.map",
+    "static/js/3.0daf495b.chunk.js": "/static/js/3.0daf495b.chunk.js",
+    "static/js/3.0daf495b.chunk.js.map": "/static/js/3.0daf495b.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.ee1a5b03.chunk.css.map": "/static/css/main.ee1a5b03.chunk.css.map",
-    "static/js/2.ffaf2016.chunk.js.LICENSE.txt": "/static/js/2.ffaf2016.chunk.js.LICENSE.txt",
+    "static/css/main.9809a8af.chunk.css.map": "/static/css/main.9809a8af.chunk.css.map",
+    "static/js/2.62276870.chunk.js.LICENSE.txt": "/static/js/2.62276870.chunk.js.LICENSE.txt",
     "static/media/avatar.9787f221.svg": "/static/media/avatar.9787f221.svg",
     "static/media/styles.scss": "/static/media/chat-background.257a2474.svg",
     "static/media/balloons.f868f7e9.svg": "/static/media/balloons.f868f7e9.svg",
+    "static/media/check-date.c69c4784.svg": "/static/media/check-date.c69c4784.svg",
     "static/media/done-shield.e313a0f7.svg": "/static/media/done-shield.e313a0f7.svg",
-    "static/media/done.c7fd411e.svg": "/static/media/done.c7fd411e.svg",
+    "static/media/done.3b71cf43.svg": "/static/media/done.3b71cf43.svg",
     "static/media/rocket.2d064ec4.svg": "/static/media/rocket.2d064ec4.svg",
-    "static/media/trophy.7e9ab188.svg": "/static/media/trophy.7e9ab188.svg"
+    "static/media/trophy.ba92085a.svg": "/static/media/trophy.ba92085a.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.3aaedb4a.js",
-    "static/js/2.ffaf2016.chunk.js",
-    "static/css/main.ee1a5b03.chunk.css",
-    "static/js/main.50b2de6e.chunk.js"
+    "static/js/runtime-main.8fe602b3.js",
+    "static/js/2.62276870.chunk.js",
+    "static/css/main.9809a8af.chunk.css",
+    "static/js/main.ec352e28.chunk.js"
   ]
 }

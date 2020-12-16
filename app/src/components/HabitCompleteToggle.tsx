@@ -9,11 +9,13 @@ import { ADD_COMPLETED_TASK, EMIT_EVENT, REMOVE_COMPLETED_TASK } from '../state/
 import env from '../env';
 
 type HabitCompleteToggleProps = {
-    habit: Habit,
-    colorKey: string
+    habit: Habit;
+    colorKey: string;
+    compact?: boolean;
+    date: Date;
 };
 
-const HabitCompleteToggle = ({ habit, colorKey }: HabitCompleteToggleProps) => {
+const HabitCompleteToggle = ({ habit, colorKey, compact, date }: HabitCompleteToggleProps) => {
 
     const { dispatch } = useContext(AppContext);
     const [isCompletedToday, setIsCompletedToday] = useState<boolean>(false);
@@ -22,7 +24,7 @@ const HabitCompleteToggle = ({ habit, colorKey }: HabitCompleteToggleProps) => {
 
     useEffect(() => {
         const completedToday = habit.CompletedTasks.find((task: CompletedTask) => {
-            return isSameDay(new Date(task.dateCompleted), new Date());
+            return isSameDay(new Date(task.dateCompleted), date);
         });
         if (completedToday) {
             setIsCompletedToday(true);
@@ -45,7 +47,7 @@ const HabitCompleteToggle = ({ habit, colorKey }: HabitCompleteToggleProps) => {
         else {
             const newTask: CompletedTask = {
                 HabitId: habit.id,
-                dateCompleted: Date.now().toString(),
+                dateCompleted: date.getTime().toString(),
             };
             saveTaskState(newTask, 'POST')
                 .then(res => {
@@ -69,26 +71,24 @@ const HabitCompleteToggle = ({ habit, colorKey }: HabitCompleteToggleProps) => {
     }
 
     return (
-        <>
-            <div className="habit-complete-toggle">
-                <p className={isCompletedToday ? '' : 'item-status--transparent'}>Nice job! 🎉</p>
-                <label>
-                    <Switch 
-                        checked={isCompletedToday}
-                        onChange={onCompleteToggle}
-                        onColor={env.habitColors[colorKey]}
-                        handleDiameter={20}
-                        uncheckedIcon={false}
-                        checkedIcon={false}
-                        boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-                        activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
-                        height={20}
-                        width={48}
-                    />
-                </label>
-            </div>
+        <div className="habit-complete-toggle">
+            <p className={isCompletedToday ? '' : 'item-status--transparent'}>{!compact ? 'Nice job! 🎉' : '🎉'}</p>
+            <label>
+                <Switch 
+                    checked={isCompletedToday}
+                    onChange={onCompleteToggle}
+                    onColor={env.habitColors[colorKey]}
+                    handleDiameter={20}
+                    uncheckedIcon={false}
+                    checkedIcon={false}
+                    boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+                    activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+                    height={20}
+                    width={48}
+                />
+            </label>
             {celebrate && <Balloons />}
-        </>
+        </div>
     )
 }
 

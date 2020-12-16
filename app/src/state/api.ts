@@ -79,5 +79,3 @@ export const saveTaskState = (task: CompletedTask, method: 'DELETE' | 'POST') =>
   })
   .then(res => res.json())
 }
-
-export const addPuff = () => {}

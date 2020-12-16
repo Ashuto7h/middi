@@ -45,7 +45,7 @@ const GoalAchievementParty = () => {
         startVelocity: 40,
         elementCount: 70,
         dragFriction: 0.12,
-        duration: 850,
+        duration: 1050,
         stagger: 3,
         width: "10px",
         height: "10px",

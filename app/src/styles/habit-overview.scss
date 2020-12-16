@@ -31,6 +31,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .habit-overview__toggle {
@@ -49,26 +50,28 @@
 .habit-overview__stats {
     display: flex;
     justify-content: space-evenly;
+    flex-wrap: wrap;
 }
 
-.habit-overview__progress, .habit-overview__badges{
+.habit-overview__stat {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-top: $xl;
     box-sizing: border-box;
+    margin-right: $lg;
 
     > div {
         display: flex;
 
         svg {
-            width: 30px;
+            width: 50px;
         }
 
         p {
             font-size: 26px;
             color: $black;
-            margin: 0;
+            margin: 0 0 0 $sm;
         }
     }
 
@@ -98,6 +101,24 @@
         background-size: 70%;
         background-image: url('images/bubbles.svg');
     }
+}
+
+.habit-overview__week-summary {
+    display: flex;
+    overflow-x: scroll;
+    margin-top: $xl;
+}
+
+.week-summary__day {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 $md;
+    color: $black;
+    border-radius: 3px;
+    border: 1px solid $pink;
+    margin-right: $md;
 }
 
 @media screen and (max-width: $break-point-mobile) {

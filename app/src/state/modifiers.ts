@@ -1,7 +1,6 @@
 import { CompletedTask, AppState, Habit } from "../types";
 
 export const addCompletedTask = (state: AppState, task: CompletedTask) => {
-    console.log(task);
     const newState = { ...state };
     const habitIndex: number = newState.habits.findIndex((habit: Habit) => habit.id === task.HabitId);
     const habit: Habit = {

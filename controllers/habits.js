@@ -38,7 +38,6 @@ router.get('/', async (req, res) => {
                 ]
             })
                 .then(habits => {
-                    console.log(habits);
                     res.status(200).send({ habits });
                 })
                 .catch(err => {

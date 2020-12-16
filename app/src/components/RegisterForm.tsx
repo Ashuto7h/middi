@@ -65,7 +65,7 @@ const RegisterForm = () => {
                     : !submitted
                         ? <>
                             <label>Nickname <input name="name" type="text" onChange={handleInputChange} placeholder="What should I call you?" /></label>
-                            <label>Email <input name="email" type="email" onChange={handleInputChange} placeholder="Used for logging in" /></label>
+                            <label>Email <input name="email" type="email" onChange={handleInputChange} placeholder="Only used for logging in" /></label>
                             <label>Password <input name="password" type="password" placeholder="Choose something strong" onChange={handleInputChange} /></label>
                         </>
                         : <div className="form__placeholder-success"><Done /></div>

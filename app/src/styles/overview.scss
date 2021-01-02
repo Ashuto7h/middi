@@ -1,0 +1,42 @@
+.overview__header {
+    text-align: center;
+    blockquote {
+        color: $black;
+        font-size: 12px;
+    }
+
+    cite {
+        color: $grey;
+        font-size: 10px;
+    }
+}
+
+.table-title {
+    font-size: 12px;
+    color: $grey;
+    margin: $xl 0 $sm 0;
+    font-weight: bold;
+}
+
+.overview-table {
+    border-collapse: collapse;
+    border-spacing: $md;
+    width: 100%;
+
+    thead tr th {
+        color: $black;
+        font-size: $md;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    tbody tr td {
+        text-align: center;
+        color: $black;
+        font-size: 12px;
+
+        svg {
+            width: 30px;
+        }
+    }
+}

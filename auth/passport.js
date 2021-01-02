@@ -7,6 +7,9 @@ const localStrategy = require('passport-local').Strategy;
 const passportJWT = require('passport-jwt');
 const JWTStrategy =passportJWT.Strategy;
 
+/**
+ * The login strategy allows us to verify a set of login credentials.
+ */
 passport.use(
     'login',
     new localStrategy({
@@ -39,6 +42,9 @@ passport.use(
     })
 )
 
+/**
+ * The JWT strategy allows us to verify the authenticity of a JWT token
+ */
 passport.use(
     'jwt',
     new JWTStrategy({

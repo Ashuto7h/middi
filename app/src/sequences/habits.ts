@@ -7,6 +7,7 @@ import HabitList from '../components/HabitList';
 import { startMessages, mainButtons } from './introduction';
 import Habits from '../components/Habits';
 import HabitOverview from '../components/HabitOverview';
+import Overview from '../components/Overview';
 
 
 export const addHabitSequence = () => {
@@ -258,6 +259,39 @@ export const updateHabitSequence = (habit: Habit) => {
                         }
                 })
             }}
+        ]
+    })
+}
+
+export const viewOverviewSequence = () => {
+    dispatchHelper.dispatch({
+        type: MESSAGE_ADDED,
+        payload: {
+            messageClass: 'message--component',
+            uuid: uuid(),
+            sender: 'bot',
+            text: null,
+            delay: 500,
+            showLoader: false,
+            Component: Overview,
+        }
+    });
+
+    dispatchHelper.dispatch({
+        type: ACTIONS_SET,
+        payload: [
+            { 
+                uuid: uuid(),
+                label: 'Done', 
+                callback: () => {
+                    dispatchHelper.dispatch({
+                        type: MESSAGE_ADDED,
+                        payload: {
+                            ...startMessages,
+                            text: `What's next?`
+                        }
+                    })
+                }}
         ]
     })
 }

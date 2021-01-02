@@ -20,7 +20,7 @@ router.post('/register', async (req, res) => {
         email,
         password: hash
       });
-      const expires = Date.now() + 24 * 60 * 60 * 60 * 7
+      const expires = Date.now() + 24 * 60 * 60 * 7 // One week
       const payload = {
         id: user.id,
         name,
@@ -91,7 +91,12 @@ router.get(
       'jwt', 
       { session: false },
       (err, user) => {
-        res.status(200).send({ user });
+        if (err) {
+          res.status(401).send({ message: err });
+        }
+        else {
+          res.status(200).send({ user });
+        }
       })(req, res)
 });
 

@@ -64,13 +64,13 @@
     position: relative;
 }
 
-.habit-overview__stats {
+.habit-overview__stats, .overview__stats {
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
 }
 
-.habit-overview__stat {
+.habit-overview__stat, .overview__stat {
     display: flex;
     flex-direction: column;
     align-items: center;

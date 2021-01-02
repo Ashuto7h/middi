@@ -1,10 +1,15 @@
 import { Message } from '../types';
 import { registrationSequence, loginSequence } from './auth';
 import { v4 as uuid } from 'uuid';
-import { addHabitSequence, viewCompleteHabitListSequence, viewHabitListSequence } from './habits';
+import { addHabitSequence, viewCompleteHabitListSequence, viewHabitListSequence, viewOverviewSequence } from './habits';
 
 
 export const mainButtons = [
+    {
+        uuid: uuid(),
+        label: 'Overview',
+        callback: viewOverviewSequence
+    },
     {
         uuid: uuid(),
         label: 'View my habits',
@@ -55,7 +60,7 @@ export const unauthenticatedIntroSequence = (): Message[] => [{
     messageClass: 'message--grouped',
     sender: 'bot',
     text: `You can visit any time and I'll help you measure your habit progress 📈`,
-    delay: 5000,
+    delay: 2000,
     showLoader: true,
     uuid: uuid()
 },
@@ -63,7 +68,7 @@ export const unauthenticatedIntroSequence = (): Message[] => [{
     messageClass: 'message--grouped',
     sender: 'bot',
     text: `Ready to get started?`,
-    delay: 7000,
+    delay: 3000,
     showLoader: true,
     uuid: uuid(),
     dispatchOnSend: {
